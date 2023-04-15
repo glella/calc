@@ -1,2 +1,3 @@
 # calc
-Simple calculator using Rust &amp; Slint
+
+Simple RPN calculator using Rust &amp; Slint
