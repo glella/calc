@@ -1,0 +1,76 @@
+import {Button, VerticalBox} from "std-widgets.slint";
+
+export global CalcLogic {
+    callback button-pressed(string);
+}
+
+component Button {
+    in property <string> text;
+    Rectangle {
+        background: ta.pressed ? red : ta.has-hover ? #255 : #0d3955;
+        border-radius: 4px;
+        border-width: 2px;
+        border-color: self.background.darker(10%);
+        ta := TouchArea {
+            clicked => {CalcLogic.button-pressed(root.text);}
+        }
+    }
+    Text { text: root.text; color: #f5f9f5;}
+}
+export component App inherits Window {
+    title: "RPN Calculator";
+    background: #605e59;
+    width: 300px;
+    height: 300px;
+
+    in property <float> value: 0.0;
+
+    GridLayout {
+        padding: 10px;
+        spacing: 10px;
+
+        Text {
+            horizontal-alignment: right;
+            text: value;
+            colspan: 5;
+            font-size: 24px;
+        }
+        Row {
+            Button {text: "%T";}
+            Button {text: "Δ%";}
+            Button {text: " %  ";}
+            Button {text: "STO";}
+            Button {text: "RCL";}
+        }
+        Row {
+            Button {text: "CHS";}
+            Button {text: "7";}
+            Button {text: "8";}
+            Button {text: "9";}
+            Button {text: "/";}
+        }
+        Row {
+            Button {text: "CLx";}
+            Button {text: "4";}
+            Button {text: "5";}
+            Button {text: "6";}
+            Button {text: "*";}
+
+        }
+        Row {
+            Button {text: "ENT"; rowspan: 2;}
+            Button {text: "1";}
+            Button {text: "2";}
+            Button {text: "3";}
+            Button {text: "-";}
+        }
+        Row {
+            // Button {text: "";}
+            Button {text: "0"; col: 1;}
+            Button {text: ".";}
+            Button {text: "f";}
+            Button {text: "+";}
+        }
+    }
+
+}
