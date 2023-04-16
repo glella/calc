@@ -36,14 +36,14 @@ export component App inherits Window {
             font-size: 24px;
         }
         Row {
-            Button {text: "%T";}
-            Button {text: "Δ%";}
-            Button {text: " %  ";}
+            Button {text: "R↓";}
+            Button {text: "x⇔y";}
+            Button {text: "LA x";}
             Button {text: "STO";}
             Button {text: "RCL";}
         }
         Row {
-            Button {text: "CHS";}
+            Button {text: "CLR";}
             Button {text: "7";}
             Button {text: "8";}
             Button {text: "9";}
@@ -65,11 +65,10 @@ export component App inherits Window {
             Button {text: "-";}
         }
         Row {
-            // Button {text: "";}
-            Button {text: "0"; col: 1;}
-            Button {text: ".";}
-            Button {text: "f";}
-            Button {text: "+";}
+            Button {text: "."; col: 1;}
+            Button {text: "0"; colspan: 2;}
+            // Button {text: "f";}
+            Button {text: "+"; col: 4;}
         }
     }
 

@@ -16,6 +16,8 @@ struct Calc {
     decimal_part: String,
     decimal_flag: bool,
     binary_flag: bool,
+    lstx: f64,
+    mem: f64, // just 1 STO & RCL memory to make it easier
 }
 
 impl Calc {
@@ -48,10 +50,12 @@ impl Calc {
             self.push();
             self.x = self.temp;
             self.temp = 0.0;
+            self.lstx = self.x;
             self.x += self.y;
             self.pop();
             self.binary_flag = false;
         } else {
+            self.lstx = self.x;
             self.x += self.y;
             self.pop();
         }
@@ -62,10 +66,12 @@ impl Calc {
             self.push();
             self.x = self.temp;
             self.temp = 0.0;
+            self.lstx = self.x;
             self.x = self.y - self.x;
             self.pop();
             self.binary_flag = false;
         } else {
+            self.lstx = self.x;
             self.x = self.y - self.x;
             self.pop();
         }
@@ -76,10 +82,12 @@ impl Calc {
             self.push();
             self.x = self.temp;
             self.temp = 0.0;
+            self.lstx = self.x;
             self.x = self.y / self.x;
             self.pop();
             self.binary_flag = false;
         } else {
+            self.lstx = self.x;
             self.x = self.y / self.x;
             self.pop();
         }
@@ -90,10 +98,12 @@ impl Calc {
             self.push();
             self.x = self.temp;
             self.temp = 0.0;
+            self.lstx = self.x;
             self.x *= self.y;
             self.pop();
             self.binary_flag = false;
         } else {
+            self.lstx = self.x;
             self.x *= self.y;
             self.pop();
         }
@@ -109,6 +119,47 @@ impl Calc {
 
     fn clx(&mut self) {
         self.x = 0.0;
+        self.temp = 0.0;
+    }
+
+    fn clr(&mut self) {
+        self.clx();
+        self.t = 0.0;
+        self.z = 0.0;
+        self.y = 0.0;
+    }
+
+    fn roll_down(&mut self) {
+        self.temp = self.x;
+        self.x = self.y;
+        self.y = self.z;
+        self.z = self.t;
+        self.t = self.temp;
+        //self.temp = 0.0;
+    }
+
+    fn xy(&mut self) {
+        self.temp = self.x;
+        self.x = self.y;
+        self.y = self.temp;
+        self.temp = 0.0;
+    }
+
+    fn last_x(&mut self) {
+        self.push();
+        self.x = self.lstx;
+        self.temp = 0.0;
+        self.binary_flag = true;
+    }
+
+    fn sto(&mut self) {
+        self.mem = self.temp;
+        self.x = self.temp;
+        self.temp = 0.0;
+    }
+
+    fn rcl(&mut self) {
+        self.x = self.mem;
         self.temp = 0.0;
     }
 }
@@ -182,6 +233,42 @@ fn main() {
             "CLx" => {
                 calc.stop_decimal_input();
                 calc.clx();
+                app.set_value(calc.x as f32);
+                calc.showregs();
+            }
+            "CLR" => {
+                calc.stop_decimal_input();
+                calc.clr();
+                app.set_value(calc.x as f32);
+                calc.showregs();
+            }
+            "R↓" => {
+                calc.stop_decimal_input();
+                calc.roll_down();
+                app.set_value(calc.x as f32);
+                calc.showregs();
+            }
+            "x⇔y" => {
+                calc.stop_decimal_input();
+                calc.xy();
+                app.set_value(calc.x as f32);
+                calc.showregs();
+            }
+            "LA x" => {
+                calc.stop_decimal_input();
+                calc.last_x();
+                app.set_value(calc.x as f32);
+                calc.showregs();
+            }
+            "STO" => {
+                calc.stop_decimal_input();
+                calc.sto();
+                app.set_value(calc.x as f32);
+                calc.showregs();
+            }
+            "RCL" => {
+                calc.stop_decimal_input();
+                calc.rcl();
                 app.set_value(calc.x as f32);
                 calc.showregs();
             }
