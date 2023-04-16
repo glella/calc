@@ -25,6 +25,40 @@ export component App inherits Window {
 
     in property <float> value: 0.0;
 
+    // Handle key presses
+    forward-focus: my-key-handler;
+    my-key-handler := FocusScope {
+        key-pressed(event) => {
+            // debug(event.text);
+            CalcLogic.button-pressed(event.text);         
+            if (event.text == Key.Return) {
+                CalcLogic.button-pressed("ENT");
+            }
+            if (event.text == "c") {
+                CalcLogic.button-pressed("CLx");
+            }
+            if (event.text == Key.Escape) {
+                CalcLogic.button-pressed("CLR");
+            }
+            if (event.text == "d") {
+                CalcLogic.button-pressed("R↓");
+            }
+            if (event.text == "z") {
+                CalcLogic.button-pressed("x⇔y");
+            }
+            if (event.text == "x") {
+                CalcLogic.button-pressed("LA x");
+            }
+            if (event.text == "s") {
+                CalcLogic.button-pressed("STO");
+            }
+            if (event.text == "r") {
+                CalcLogic.button-pressed("RCL");
+            }
+            accept
+        }
+    }
+
     GridLayout {
         padding: 10px;
         spacing: 10px;

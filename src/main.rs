@@ -109,13 +109,13 @@ impl Calc {
         }
     }
 
-    fn showregs(&self) {
-        println!("T: {}", self.t);
-        println!("Z: {}", self.z);
-        println!("Y: {}", self.y);
-        println!("X: {}", self.x);
-        println!("---------");
-    }
+    // fn showregs(&self) {
+    //     println!("T: {}", self.t);
+    //     println!("Z: {}", self.z);
+    //     println!("Y: {}", self.y);
+    //     println!("X: {}", self.x);
+    //     println!("---------");
+    // }
 
     fn clx(&mut self) {
         self.x = 0.0;
@@ -135,7 +135,6 @@ impl Calc {
         self.y = self.z;
         self.z = self.t;
         self.t = self.temp;
-        //self.temp = 0.0;
     }
 
     fn xy(&mut self) {
@@ -164,6 +163,7 @@ impl Calc {
     }
 }
 
+#[quit::main]
 fn main() {
     let app = App::new().unwrap();
     let weak = app.as_weak();
@@ -191,25 +191,25 @@ fn main() {
                 calc.stop_decimal_input();
                 calc.division();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "*" => {
                 calc.stop_decimal_input();
                 calc.multiplication();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "-" => {
                 calc.stop_decimal_input();
                 calc.subtraction();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "+" => {
                 calc.stop_decimal_input();
                 calc.addition();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "." => {
                 if !calc.decimal_flag {
@@ -225,52 +225,63 @@ fn main() {
                 }
             }
             "ENT" => {
+                // Enter key
                 calc.stop_decimal_input();
                 calc.enter();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "CLx" => {
+                // C key
                 calc.stop_decimal_input();
                 calc.clx();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "CLR" => {
+                // Esc key
                 calc.stop_decimal_input();
                 calc.clr();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "R↓" => {
+                // D key
                 calc.stop_decimal_input();
                 calc.roll_down();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "x⇔y" => {
+                // Z key
                 calc.stop_decimal_input();
                 calc.xy();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "LA x" => {
+                // X key
                 calc.stop_decimal_input();
                 calc.last_x();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "STO" => {
+                // S key
                 calc.stop_decimal_input();
                 calc.sto();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
             }
             "RCL" => {
+                // R key
                 calc.stop_decimal_input();
                 calc.rcl();
                 app.set_value(calc.x as f32);
-                calc.showregs();
+                // calc.showregs();
+            }
+            "q" => {
+                quit::with_code(0);
             }
             _ => {}
         }
