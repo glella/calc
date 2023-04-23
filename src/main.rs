@@ -163,6 +163,7 @@ impl Calc {
     }
 }
 
+// #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // no console in release for GUI apps
 #[quit::main]
 fn main() {
     let app = App::new().unwrap();
